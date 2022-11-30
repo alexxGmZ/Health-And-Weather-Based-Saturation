@@ -1,10 +1,14 @@
 # Health and Weather Based Saturation
 
-**Official Addon Link:** https://www.moddb.com/mods/stalker-anomaly/addons/health-and-weather-based-saturation.
-
 **MCM is supported**
 
----
+<br>
+
+<p align="center">
+	<a href="https://www.moddb.com/mods/stalker-anomaly/addons/health-and-weather-based-saturation" title="Download Health and Weather Based Saturation (UPDATE 2) - Mod DB" target="_blank"><img src="https://button.moddb.com/download/medium/239323.png" alt="Health and Weather Based Saturation (UPDATE 2)" /></a>
+</p>
+
+<br>
 
 This addon dynamically readjust the game saturation(```r__saturation```) in the settings depending on the weather and character health. The Saturation setting will be locked while this mod is installed.
 
