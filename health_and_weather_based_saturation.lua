@@ -8,43 +8,27 @@ local HEALTH_BASED = true
 -- especially the weather editor
 local DEBUG_MODE = false
 
--- r__saturation values should be within [0 - 2]
-local BRIGHT_WEATHER_SATURATION = 1.5
-local BRIGHT_WEATHERS = {
-	w_clear1 = true,
-	w_clear2 = true,
-	w_partly1 = true
-}
+local W_CLEAR1_SATURATION = 1.5
+local W_CLEAR2_SATURATION = 1.5
+local W_PARTLY1_SATURATION = 1.5
 
-local SLIGHTLY_BRIGHT_WEATHER_SATURATION = 1.3
-local SLIGHTLY_BRIGHT_WEATHER = {
-	w_foggy1 = true,
-	w_foggy2 = true,
-	w_rain1 = true,
-	w_partly2 = true
-}
+local W_FOGGY1_SATURATION = 1.3
+local W_FOGGY2_SATURATION = 1.3
+local W_RAIN1_SATURATION = 1.3
+local W_PARTLY2_SATURATION = 1.3
 
-local CLOUDY_WEATHER_SATURATION = 1
-local CLOUDY_WEATHER = {
-	w_cloudy1 = true,
-	w_cloudy2_dark = true
-}
+local W_CLOUDY1_SATURATION = 1
+local W_CLOUDY2_DARK_SATURATION = 1
 
-local STORMY_RAINY_WEATHER_SATURATION = 0.8
-local STORMY_RAINY_WEATHER = {
-	w_storm1 = true,
-	w_storm2 = true,
-	w_rain2 = true,
-	w_rain3 = true
-}
+local W_STORM1_SATURATION = 0.8
+local W_STORM2_SATURATION = 0.8
+local W_RAIN2_SATURATION = 0.8
+local W_RAIN3_SATURATION = 0.8
 
-local BLOWOUT_PSISTORM_WEATHER_SATURATION = 1
-local BLOWOUT_PSISTORM_WEATHER = {
-	fx_blowout_day = true,
-	fx_blowout_night = true,
-	fx_psi_storm_day = true,
-	fx_psi_storm_night = true
-}
+local FX_BLOWOUT_DAY_SATURATION = 1
+local FX_BLOWOUT_NIGHT_SATURATION = 1
+local FX_PSI_STORM_DAY_SATURATION = 1
+local FX_PSI_STORM_NIGHT_SATURATION = 1
 
 local UNDERGROUND_MAP_SATURATION = 1.5
 local UNDERGROUND_MAPS = {
@@ -76,11 +60,6 @@ end
 function load_settings()
 	if ui_mcm then
 		HEALTH_BASED = ui_mcm.get("saturation/HEALTH_BASED")
-		BRIGHT_WEATHER_SATURATION = ui_mcm.get("saturation/BRIGHT_WEATHER_SATURATION")
-		SLIGHTLY_BRIGHT_WEATHER_SATURATION = ui_mcm.get("saturation/SLIGHTLY_BRIGHT_WEATHER_SATURATION")
-		CLOUDY_WEATHER_SATURATION = ui_mcm.get("saturation/CLOUDY_WEATHER_SATURATION")
-		STORMY_RAINY_WEATHER_SATURATION = ui_mcm.get("saturation/STORMY_RAINY_WEATHER_SATURATION")
-		BLOWOUT_PSISTORM_WEATHER_SATURATION = ui_mcm.get("saturation/BLOWOUT_PSISTORM_WEATHER_SATURATION")
 		UNDERGROUND_MAP_SATURATION = ui_mcm.get("saturation/UNDERGROUND_MAP_SATURATION")
 		DEBUG_MODE = ui_mcm.get("saturation/DEBUG_MODE")
 	end
@@ -106,25 +85,6 @@ function actor_on_update()
 	local health = db.actor.health
 	local level_name = level.name()
 
-	if is_bright_weather() then
-		saturation = BRIGHT_WEATHER_SATURATION
-	end
-	if is_slightly_bright_weather() then
-		saturation = SLIGHTLY_BRIGHT_WEATHER_SATURATION
-	end
-	if is_cloudy_weather() then
-		saturation = CLOUDY_WEATHER_SATURATION
-	end
-	if is_stormy_rainy_weather() then
-		saturation = STORMY_RAINY_WEATHER_SATURATION
-	end
-	if is_blowout_psistorm_weather() then
-		saturation = BLOWOUT_PSISTORM_WEATHER_SATURATION
-	end
-	if UNDERGROUND_MAPS[level_name] then
-		saturation = UNDERGROUND_MAP_SATURATION
-	end
-
 	-- if the HEALTH_BASED option is true then the saturation will be multiplied
 	-- to the actor health
 	if HEALTH_BASED == true then
@@ -137,50 +97,6 @@ end
 function actor_on_sleep()
 	-- actor_on_first_update()
 	CreateTimeEvent("reset_first_weather", "reset_first_weather", 3, actor_on_first_update)
-end
-
-function is_bright_weather()
-	local weather = FIRST_LEVEL_WEATHER or get_current_weather_file()
-
-	if BRIGHT_WEATHERS[weather] or weather == "[default]" then
-		return true
-	end
-	return false
-end
-
-function is_slightly_bright_weather()
-	local weather = FIRST_LEVEL_WEATHER or get_current_weather_file()
-
-	if SLIGHTLY_BRIGHT_WEATHER[weather] then
-		return true
-	end
-	return false
-end
-
-function is_cloudy_weather()
-	local weather = FIRST_LEVEL_WEATHER or get_current_weather_file()
-
-	if CLOUDY_WEATHER[weather] then
-		return true
-	end
-	return false
-end
-
-function is_stormy_rainy_weather()
-	local weather = FIRST_LEVEL_WEATHER or get_current_weather_file()
-
-	if STORMY_RAINY_WEATHER[weather] then
-		return true
-	end
-	return false
-end
-
-function is_blowout_psistorm_weather()
-	local weather = get_current_weather_file()
-	if BLOWOUT_PSISTORM_WEATHER[weather] then
-		return true
-	end
-	return false
 end
 
 function get_current_weather_file()
