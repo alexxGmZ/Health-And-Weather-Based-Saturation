@@ -60,6 +60,12 @@ end
 function load_settings()
 	if ui_mcm then
 		HEALTH_BASED = ui_mcm.get("saturation/HEALTH_BASED")
+
+		W_CLEAR1_SATURATION = ui_mcm.get("saturation/W_CLEAR1_SATURATION")
+		W_CLEAR2_SATURATION = ui_mcm.get("saturation/W_CLEAR2_SATURATION")
+		W_PARTLY1_SATURATION = ui_mcm.get("saturation/W_PARTLY1_SATURATION")
+		W_PARTLY2_SATURATION = ui_mcm.get("saturation/W_PARTLY2_SATURATION")
+
 		UNDERGROUND_MAP_SATURATION = ui_mcm.get("saturation/UNDERGROUND_MAP_SATURATION")
 		DEBUG_MODE = ui_mcm.get("saturation/DEBUG_MODE")
 	end
@@ -84,6 +90,75 @@ function actor_on_update()
 	local saturation = 1
 	local health = db.actor.health
 	local level_name = level.name()
+	local current_weather = get_current_weather_file()
+
+	-- clear weather
+	if current_weather == "w_clear1" then
+		saturation = W_CLEAR1_SATURATION
+	end
+	if current_weather == "w_clear2" then
+		saturation = W_CLEAR2_SATURATION
+	end
+
+	-- partly clear weather
+	if current_weather == "w_partly1" then
+		saturation = W_PARTLY1_SATURATION
+	end
+	if current_weather == "w_partly2" then
+		saturation = W_PARTLY2_SATURATION
+	end
+
+	-- foggy weather
+	if current_weather == "w_foggy1" then
+		saturation = W_FOGGY1_SATURATION
+	end
+	if current_weather == "w_foggy2" then
+		saturation = W_FOGGY2_SATURATION
+	end
+
+	-- rainy weather
+	if current_weather == "w_rain1" then
+		saturation = W_RAIN1_SATURATION
+	end
+	if current_weather == "w_rain2" then
+		saturation = W_RAIN2_SATURATION
+	end
+	if current_weather == "w_rain3" then
+		saturation = W_RAIN3_SATURATION
+	end
+
+	-- cloudy weather
+	if current_weather == "w_cloudy1" then
+		saturation = W_CLOUDY1_SATURATION
+	end
+	if current_weather == "w_cloudy2_dark" then
+		saturation = W_CLOUDY2_DARK_SATURATION
+	end
+
+	-- stormy weather
+	if current_weather == "w_storm1" then
+		saturation = W_STORM1_SATURATION
+	end
+	if current_weather == "w_storm2" then
+		saturation = W_STORM2_SATURATION
+	end
+
+	-- emission
+	if current_weather == "fx_blowout_day" then
+		saturation = FX_BLOWOUT_DAY_SATURATION
+	end
+	if current_weather == "fx_blowout_night" then
+		saturation = FX_BLOWOUT_NIGHT_SATURATION
+	end
+
+	-- psi storm
+	if current_weather == "fx_psi_storm_day" then
+		saturation = FX_PSI_STORM_DAY_SATURATION
+	end
+	if current_weather == "fx_psi_storm_night" then
+		saturation = FX_PSI_STORM_NIGHT_SATURATION
+	end
+
 
 	-- if the HEALTH_BASED option is true then the saturation will be multiplied
 	-- to the actor health
