@@ -63,8 +63,28 @@ function load_settings()
 
 		W_CLEAR1_SATURATION = ui_mcm.get("saturation/W_CLEAR1_SATURATION")
 		W_CLEAR2_SATURATION = ui_mcm.get("saturation/W_CLEAR2_SATURATION")
+
 		W_PARTLY1_SATURATION = ui_mcm.get("saturation/W_PARTLY1_SATURATION")
 		W_PARTLY2_SATURATION = ui_mcm.get("saturation/W_PARTLY2_SATURATION")
+
+		W_FOGGY1_SATURATION = ui_mcm.get("saturation/W_FOGGY1_SATURATION")
+		W_FOGGY2_SATURATION = ui_mcm.get("saturation/W_FOGGY2_SATURATION")
+
+		W_RAIN1_SATURATION = ui_mcm.get("saturation/W_RAIN1_SATURATION")
+		W_RAIN2_SATURATION = ui_mcm.get("saturation/W_RAIN2_SATURATION")
+		W_RAIN3_SATURATION = ui_mcm.get("saturation/W_RAIN3_SATURATION")
+
+		W_CLOUDY1_SATURATION = ui_mcm.get("saturation/W_CLOUDY1_SATURATION")
+		W_CLOUDY2_DARK_SATURATION = ui_mcm.get("saturation/W_CLOUDY2_DARK_SATURATION")
+
+		W_STORM1_SATURATION = ui_mcm.get("saturation/W_STORM1_SATURATION")
+		W_STORM2_SATURATION = ui_mcm.get("saturation/W_STORM2_SATURATION")
+
+		FX_BLOWOUT_DAY_SATURATION = ui_mcm.get("saturation/FX_BLOWOUT_DAY_SATURATION")
+		FX_BLOWOUT_NIGHT_SATURATION = ui_mcm.get("saturation/FX_BLOWOUT_NIGHT_SATURATION")
+
+		FX_PSI_STORM_DAY_SATURATION = ui_mcm.get("saturation/FX_PSI_STORM_DAY_SATURATION")
+		FX_PSI_STORM_NIGHT_SATURATION = ui_mcm.get("saturation/FX_PSI_STORM_NIGHT_SATURATION")
 
 		UNDERGROUND_MAP_SATURATION = ui_mcm.get("saturation/UNDERGROUND_MAP_SATURATION")
 		DEBUG_MODE = ui_mcm.get("saturation/DEBUG_MODE")
