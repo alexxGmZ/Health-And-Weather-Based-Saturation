@@ -179,6 +179,10 @@ function actor_on_update()
 		saturation = FX_PSI_STORM_NIGHT_SATURATION
 	end
 
+	-- underground levels
+	if UNDERGROUND_MAPS[level_name] then
+		saturation = UNDERGROUND_MAP_SATURATION
+	end
 
 	-- if the HEALTH_BASED option is true then the saturation will be multiplied
 	-- to the actor health
@@ -200,43 +204,20 @@ end
 
 -- for debugging purposes
 function on_key_release(key, stalker)
-	if key == DIK_keys["DIK_9"] then
-		utils_data.debug_write("----- health_and_weather_based_saturation.script debug section -----")
-		utils_data.debug_write("get_current_weather_file() " .. get_current_weather_file())
-		printf("FIRST_LEVEL_WEATHER %s", FIRST_LEVEL_WEATHER)
+	if key ~= DIK_keys["DIK_9"] then
+		return
+	end
 
-		local inside = GetEvent("current_safe_cover") and true or false
-		printf("inside %s", inside)
+	utils_data.debug_write("----- health_and_weather_based_saturation.script debug section -----")
+	utils_data.debug_write("get_current_weather_file() " .. get_current_weather_file())
+	printf("FIRST_LEVEL_WEATHER %s", FIRST_LEVEL_WEATHER)
 
-		if is_bright_weather() then
-			utils_data.debug_write("is_bright_weather() is TRUE")
-			printf("Saturation %s", BRIGHT_WEATHER_SATURATION * db.actor.health)
-		end
+	local inside = GetEvent("current_safe_cover") and true or false
+	printf("inside %s", inside)
 
-		if is_slightly_bright_weather() then
-			utils_data.debug_write("is_slightly_bright_weather() is TRUE")
-			printf("Saturation %s", SLIGHTLY_BRIGHT_WEATHER_SATURATION * db.actor.health)
-		end
-
-		if is_cloudy_weather() then
-			utils_data.debug_write("is_cloudy_weather() is TRUE")
-			printf("Saturation %s", CLOUDY_WEATHER_SATURATION * db.actor.health)
-		end
-
-		if is_stormy_rainy_weather() then
-			utils_data.debug_write("is_stormy_rainy_weather() is TRUE")
-			printf("Saturation %s", STORMY_RAINY_WEATHER_SATURATION * db.actor.health)
-		end
-
-		if is_blowout_psistorm_weather() then
-			utils_data.debug_write("is_blowout_psistorm_weather() is TRUE")
-			printf("Saturation %s", BLOWOUT_PSISTORM_WEATHER_SATURATION * db.actor.health)
-		end
-
-		if UNDERGROUND_MAPS[level.name()] then
-			utils_data.debug_write("UNDERGROUND_MAPS is TRUE")
-			printf("Saturation %s", UNDERGROUND_MAP_SATURATION * db.actor.health)
-		end
+	if UNDERGROUND_MAPS[level.name()] then
+		utils_data.debug_write("UNDERGROUND_MAPS is TRUE")
+		printf("Saturation %s", UNDERGROUND_MAP_SATURATION * db.actor.health)
 	end
 end
 
