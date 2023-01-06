@@ -1,4 +1,7 @@
-local FIRST_LEVEL_WEATHER = nil
+local CreateTimeEvent = demonized_time_events.CreateTimeEvent
+local RemoveTimeEvent = demonized_time_events.RemoveTimeEvent
+
+local FIRST_LEVEL_WEATHER = ""
 local DEBUG_MODE
 
 function on_game_start()
@@ -22,7 +25,7 @@ end
 -- put a value for FIRST_LEVEL_WEATHER
 function actor_on_first_update()
 	if is_blowout_psistorm_weather() or DEBUG_MODE then
-		FIRST_LEVEL_WEATHER = nil
+		FIRST_LEVEL_WEATHER = ""
 	else
 		FIRST_LEVEL_WEATHER = get_current_weather()
 	end
@@ -34,12 +37,13 @@ function actor_on_sleep()
 	CreateTimeEvent("mcm_first_weather", "mcm_first_weather", 3, actor_on_first_update)
 end
 
--- when it is blowout or psi storm, this weather will be used
-function real_engine_weather()
-	return get_current_weather()
-end
-
+-- main mcm function
 function on_mcm_load()
+	local current_weather = FIRST_LEVEL_WEATHER
+	if is_blowout_psistorm_weather() then
+		current_weather = get_current_weather()
+	end
+
 	op = {
 		id = "saturation",
 		sh = true,
@@ -48,7 +52,7 @@ function on_mcm_load()
 
 			{id = "current_weather",
 				type = "desc",
-				text = "Current Weather: " .. FIRST_LEVEL_WEATHER
+				text = "Current Weather: " .. current_weather
 			},
 
 			{id = "HEALTH_BASED", type = "check", val = 1, def = true},
@@ -218,8 +222,14 @@ end
 -- determine if weather is psi storm or emission
 function is_blowout_psistorm_weather()
 	local weather = get_current_weather()
-	if weather == "fx_blowout_day" or weather == "fx_blowout_night" or
-		weather == "fx_psi_storm_day" or weather == "fx_psi_storm_night" then
+	local weather_set = {
+		fx_blowout_day = true,
+		fx_blowout_night = true,
+		fx_psi_storm_day = true,
+		fx_psi_storm_night = true
+	}
+
+	if weather_set[weather] then
 		return true
 	end
 	return false
