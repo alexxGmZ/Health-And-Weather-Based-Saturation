@@ -7,7 +7,7 @@ function on_mcm_load()
 
 			{id = "current_weather",
 				type = "desc",
-				text = get_current_weather()
+				text = "Current Weather: " .. get_current_weather()
 			},
 
 			{id = "HEALTH_BASED", type = "check", val = 1, def = true},
@@ -113,7 +113,7 @@ function on_mcm_load()
 			},
 
 			-- stormy weather
-			{id = "W_STORMY1_SATURATION",
+			{id = "W_STORM1_SATURATION",
 				type = "track",
 				val = 2,
 				def = 0.8,
