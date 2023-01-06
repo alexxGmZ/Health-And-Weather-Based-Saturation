@@ -60,6 +60,7 @@ end
 function load_settings()
 	if ui_mcm then
 		HEALTH_BASED = ui_mcm.get("saturation/HEALTH_BASED")
+		DEBUG_MODE = ui_mcm.get("saturation/DEBUG_MODE")
 
 		W_CLEAR1_SATURATION = ui_mcm.get("saturation/W_CLEAR1_SATURATION")
 		W_CLEAR2_SATURATION = ui_mcm.get("saturation/W_CLEAR2_SATURATION")
@@ -87,7 +88,6 @@ function load_settings()
 		FX_PSI_STORM_NIGHT_SATURATION = ui_mcm.get("saturation/FX_PSI_STORM_NIGHT_SATURATION")
 
 		UNDERGROUND_MAP_SATURATION = ui_mcm.get("saturation/UNDERGROUND_MAP_SATURATION")
-		DEBUG_MODE = ui_mcm.get("saturation/DEBUG_MODE")
 	end
 end
 
@@ -191,6 +191,15 @@ function actor_on_update()
 	else
 		get_console():execute("r__saturation " .. saturation)
 	end
+end
+
+function is_blowout_psistorm_weather()
+	local weather = get_current_weather_file()
+	if weather == "fx_blowout_day" or weather == "fx_blowout_night" or
+		weather == "fx_psi_storm_day" or weather == "fx_psi_storm_night" then
+		return true
+	end
+	return false
 end
 
 function actor_on_sleep()
