@@ -1,3 +1,44 @@
+local FIRST_LEVEL_WEATHER = nil
+local DEBUG_MODE
+
+function on_game_start()
+	RegisterScriptCallback("on_option_change", load_settings)
+	RegisterScriptCallback("actor_on_first_update", load_settings)
+
+	RegisterScriptCallback("actor_on_first_update", actor_on_first_update)
+	RegisterScriptCallback("actor_on_sleep", actor_on_sleep)
+	RegisterScriptCallback("actor_on_update", real_engine_weather)
+end
+
+-- determine debug mode option
+function load_settings()
+	if not ui_mcm then
+		return
+	end
+
+	DEBUG_MODE = ui_mcm.get("saturation/DEBUG_MODE")
+end
+
+-- put a value for FIRST_LEVEL_WEATHER
+function actor_on_first_update()
+	if is_blowout_psistorm_weather() or DEBUG_MODE then
+		FIRST_LEVEL_WEATHER = nil
+	else
+		FIRST_LEVEL_WEATHER = get_current_weather()
+	end
+	RemoveTimeEvent("mcm_first_weather", "mcm_first_weather")
+end
+
+-- reset first level weather
+function actor_on_sleep()
+	CreateTimeEvent("mcm_first_weather", "mcm_first_weather", 3, actor_on_first_update)
+end
+
+-- when it is blowout or psi storm, this weather will be used
+function real_engine_weather()
+	return get_current_weather()
+end
+
 function on_mcm_load()
 	op = {
 		id = "saturation",
@@ -7,7 +48,7 @@ function on_mcm_load()
 
 			{id = "current_weather",
 				type = "desc",
-				text = "Current Weather: " .. get_current_weather()
+				text = "Current Weather: " .. FIRST_LEVEL_WEATHER
 			},
 
 			{id = "HEALTH_BASED", type = "check", val = 1, def = true},
@@ -170,10 +211,16 @@ function on_mcm_load()
 	return op
 end
 
-function on_game_start()
-	RegisterScriptCallback("actor_on_first_update", get_current_weather)
-end
-
 function get_current_weather()
 	return level.get_weather()
+end
+
+-- determine if weather is psi storm or emission
+function is_blowout_psistorm_weather()
+	local weather = get_current_weather()
+	if weather == "fx_blowout_day" or weather == "fx_blowout_night" or
+		weather == "fx_psi_storm_day" or weather == "fx_psi_storm_night" then
+		return true
+	end
+	return false
 end

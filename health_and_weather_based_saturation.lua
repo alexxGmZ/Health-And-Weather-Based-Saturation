@@ -1,36 +1,33 @@
 local CreateTimeEvent = demonized_time_events.CreateTimeEvent
 local RemoveTimeEvent = demonized_time_events.RemoveTimeEvent
 
--- Change the value to "false" if you don't want the health based aspect
-local HEALTH_BASED = true
+-- change the default value in "health_and_weather_based_saturation_mcm.script"
+local HEALTH_BASED
+local DEBUG_MODE
 
--- Change the value to "true" if you are planning to play around the debug mode
--- especially the weather editor
-local DEBUG_MODE = false
+local W_CLEAR1_SATURATION
+local W_CLEAR2_SATURATION
+local W_PARTLY1_SATURATION
 
-local W_CLEAR1_SATURATION = 1.5
-local W_CLEAR2_SATURATION = 1.5
-local W_PARTLY1_SATURATION = 1.5
+local W_FOGGY1_SATURATION
+local W_FOGGY2_SATURATION
+local W_RAIN1_SATURATION
+local W_PARTLY2_SATURATION
 
-local W_FOGGY1_SATURATION = 1.3
-local W_FOGGY2_SATURATION = 1.3
-local W_RAIN1_SATURATION = 1.3
-local W_PARTLY2_SATURATION = 1.3
+local W_CLOUDY1_SATURATION
+local W_CLOUDY2_DARK_SATURATION
 
-local W_CLOUDY1_SATURATION = 1
-local W_CLOUDY2_DARK_SATURATION = 1
+local W_STORM1_SATURATION
+local W_STORM2_SATURATION
+local W_RAIN2_SATURATION
+local W_RAIN3_SATURATION
 
-local W_STORM1_SATURATION = 0.8
-local W_STORM2_SATURATION = 0.8
-local W_RAIN2_SATURATION = 0.8
-local W_RAIN3_SATURATION = 0.8
+local FX_BLOWOUT_DAY_SATURATION
+local FX_BLOWOUT_NIGHT_SATURATION
+local FX_PSI_STORM_DAY_SATURATION
+local FX_PSI_STORM_NIGHT_SATURATION
 
-local FX_BLOWOUT_DAY_SATURATION = 1
-local FX_BLOWOUT_NIGHT_SATURATION = 1
-local FX_PSI_STORM_DAY_SATURATION = 1
-local FX_PSI_STORM_NIGHT_SATURATION = 1
-
-local UNDERGROUND_MAP_SATURATION = 1.5
+local UNDERGROUND_MAP_SATURATION
 local UNDERGROUND_MAPS = {
 	l03u_agr_underground = true,
 	l08u_brainlab = true,
@@ -42,8 +39,6 @@ local UNDERGROUND_MAPS = {
 	l12u_control_monolith = true,
 	l13u_warlab = true
 }
-
-local INDOOR_SATURATION = 1.5
 
 function on_game_start()
 	-- MCM stuff
@@ -94,7 +89,7 @@ end
 -- in order for the saturation to be more consistent
 local FIRST_LEVEL_WEATHER = nil
 function actor_on_first_update()
-	if is_blowout_psistorm_weather() or DEBUG_MODE == true then
+	if is_blowout_psistorm_weather() or DEBUG_MODE then
 		FIRST_LEVEL_WEATHER = nil
 	else
 		FIRST_LEVEL_WEATHER = get_current_weather_file()
@@ -110,7 +105,7 @@ function actor_on_update()
 	local saturation = 1
 	local health = db.actor.health
 	local level_name = level.name()
-	local current_weather = get_current_weather_file()
+	local current_weather = FIRST_LEVEL_WEATHER
 
 	-- clear weather
 	if current_weather == "w_clear1" then
