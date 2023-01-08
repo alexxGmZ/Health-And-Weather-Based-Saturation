@@ -148,7 +148,7 @@ function actor_on_update()
 	local saturation = 1
 	local health = db.actor.health
 	local level_name = level.name()
-	local current_weather = FIRST_LEVEL_WEATHER
+	local current_weather = FIRST_LEVEL_WEATHER or get_current_weather_file()
 
 	-- assign the corresponding saturation to the weather inside WEATHER[]
 	if WEATHER[current_weather] then
@@ -188,7 +188,7 @@ function get_current_weather_file()
 end
 
 -- for debugging purposes
-function on_key_release(key, stalker)
+function on_key_release(key)
 	if key ~= DIK_keys["DIK_9"] then
 		return
 	end

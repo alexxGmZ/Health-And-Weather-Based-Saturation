@@ -10,7 +10,6 @@ function on_game_start()
 
 	RegisterScriptCallback("actor_on_first_update", actor_on_first_update)
 	RegisterScriptCallback("actor_on_sleep", actor_on_sleep)
-	RegisterScriptCallback("actor_on_update", real_engine_weather)
 end
 
 -- determine debug mode option
@@ -29,12 +28,12 @@ function actor_on_first_update()
 	else
 		FIRST_LEVEL_WEATHER = get_current_weather()
 	end
-	RemoveTimeEvent("mcm_first_weather", "mcm_first_weather")
+	RemoveTimeEvent("mcm_health_saturation_first_weather", "mcm_health_saturation_first_weather")
 end
 
 -- reset first level weather
 function actor_on_sleep()
-	CreateTimeEvent("mcm_first_weather", "mcm_first_weather", 3, actor_on_first_update)
+	CreateTimeEvent("mcm_health_saturation_first_weather", "mcm_health_saturation_first_weather", 3, actor_on_first_update)
 end
 
 -- main mcm function
