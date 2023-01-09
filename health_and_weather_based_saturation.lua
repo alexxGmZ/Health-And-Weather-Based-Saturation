@@ -27,7 +27,7 @@ local FX_BLOWOUT_NIGHT_SATURATION
 local FX_PSI_STORM_DAY_SATURATION
 local FX_PSI_STORM_NIGHT_SATURATION
 
-local UNDERGROUND_MAP_SATURATION
+local UNDERGROUND_MAP_SATURATION = 1
 local UNDERGROUND_MAPS = {
 	l03u_agr_underground = true,
 	l08u_brainlab = true,
@@ -41,6 +41,7 @@ local UNDERGROUND_MAPS = {
 }
 
 local WEATHER = {
+	["[default]"] = true,
 	w_clear1 = true,
 	w_clear2 = true,
 	w_partly1 = true,
@@ -60,26 +61,6 @@ local WEATHER = {
 	fx_psi_storm_night = true,
 }
 
-local WEATHER_SATURATION = {
-	w_clear1 = W_CLEAR1_SATURATION,
-	w_clear2 = W_CLEAR2_SATURATION,
-	w_partly1 = W_PARTLY1_SATURATION,
-	w_partly2 = W_PARTLY2_SATURATION,
-	w_foggy1 = W_FOGGY1_SATURATION,
-	w_foggy2 = W_FOGGY2_SATURATION,
-	w_cloudy1 = W_CLOUDY1_SATURATION,
-	w_cloudy2_dark = W_CLOUDY2_DARK_SATURATION,
-	w_rain1 = W_RAIN1_SATURATION,
-	w_rain2 = W_RAIN2_SATURATION,
-	w_rain3 = W_RAIN3_SATURATION,
-	w_storm1 = W_STORM1_SATURATION,
-	w_storm2 = W_STORM2_SATURATION,
-	fx_blowout_day = FX_BLOWOUT_DAY_SATURATION,
-	fx_blowout_night = FX_BLOWOUT_NIGHT_SATURATION,
-	fx_psi_storm_day = FX_PSI_STORM_DAY_SATURATION,
-	fx_psi_storm_night = FX_PSI_STORM_NIGHT_SATURATION,
-}
-
 function on_game_start()
 	-- MCM stuff
 	RegisterScriptCallback("on_option_change", load_settings)
@@ -93,39 +74,37 @@ end
 
 -- for MCM Support
 function load_settings()
-	if not ui_mcm then
-		return
+	if ui_mcm then
+		HEALTH_BASED = ui_mcm.get("saturation/HEALTH_BASED")
+		DEBUG_MODE = ui_mcm.get("saturation/DEBUG_MODE")
+
+		W_CLEAR1_SATURATION = ui_mcm.get("saturation/W_CLEAR1_SATURATION")
+		W_CLEAR2_SATURATION = ui_mcm.get("saturation/W_CLEAR2_SATURATION")
+
+		W_PARTLY1_SATURATION = ui_mcm.get("saturation/W_PARTLY1_SATURATION")
+		W_PARTLY2_SATURATION = ui_mcm.get("saturation/W_PARTLY2_SATURATION")
+
+		W_FOGGY1_SATURATION = ui_mcm.get("saturation/W_FOGGY1_SATURATION")
+		W_FOGGY2_SATURATION = ui_mcm.get("saturation/W_FOGGY2_SATURATION")
+
+		W_RAIN1_SATURATION = ui_mcm.get("saturation/W_RAIN1_SATURATION")
+		W_RAIN2_SATURATION = ui_mcm.get("saturation/W_RAIN2_SATURATION")
+		W_RAIN3_SATURATION = ui_mcm.get("saturation/W_RAIN3_SATURATION")
+
+		W_CLOUDY1_SATURATION = ui_mcm.get("saturation/W_CLOUDY1_SATURATION")
+		W_CLOUDY2_DARK_SATURATION = ui_mcm.get("saturation/W_CLOUDY2_DARK_SATURATION")
+
+		W_STORM1_SATURATION = ui_mcm.get("saturation/W_STORM1_SATURATION")
+		W_STORM2_SATURATION = ui_mcm.get("saturation/W_STORM2_SATURATION")
+
+		FX_BLOWOUT_DAY_SATURATION = ui_mcm.get("saturation/FX_BLOWOUT_DAY_SATURATION")
+		FX_BLOWOUT_NIGHT_SATURATION = ui_mcm.get("saturation/FX_BLOWOUT_NIGHT_SATURATION")
+
+		FX_PSI_STORM_DAY_SATURATION = ui_mcm.get("saturation/FX_PSI_STORM_DAY_SATURATION")
+		FX_PSI_STORM_NIGHT_SATURATION = ui_mcm.get("saturation/FX_PSI_STORM_NIGHT_SATURATION")
+
+		UNDERGROUND_MAP_SATURATION = ui_mcm.get("saturation/UNDERGROUND_MAP_SATURATION")
 	end
-
-	HEALTH_BASED = ui_mcm.get("saturation/HEALTH_BASED")
-	DEBUG_MODE = ui_mcm.get("saturation/DEBUG_MODE")
-
-	W_CLEAR1_SATURATION = ui_mcm.get("saturation/W_CLEAR1_SATURATION")
-	W_CLEAR2_SATURATION = ui_mcm.get("saturation/W_CLEAR2_SATURATION")
-
-	W_PARTLY1_SATURATION = ui_mcm.get("saturation/W_PARTLY1_SATURATION")
-	W_PARTLY2_SATURATION = ui_mcm.get("saturation/W_PARTLY2_SATURATION")
-
-	W_FOGGY1_SATURATION = ui_mcm.get("saturation/W_FOGGY1_SATURATION")
-	W_FOGGY2_SATURATION = ui_mcm.get("saturation/W_FOGGY2_SATURATION")
-
-	W_RAIN1_SATURATION = ui_mcm.get("saturation/W_RAIN1_SATURATION")
-	W_RAIN2_SATURATION = ui_mcm.get("saturation/W_RAIN2_SATURATION")
-	W_RAIN3_SATURATION = ui_mcm.get("saturation/W_RAIN3_SATURATION")
-
-	W_CLOUDY1_SATURATION = ui_mcm.get("saturation/W_CLOUDY1_SATURATION")
-	W_CLOUDY2_DARK_SATURATION = ui_mcm.get("saturation/W_CLOUDY2_DARK_SATURATION")
-
-	W_STORM1_SATURATION = ui_mcm.get("saturation/W_STORM1_SATURATION")
-	W_STORM2_SATURATION = ui_mcm.get("saturation/W_STORM2_SATURATION")
-
-	FX_BLOWOUT_DAY_SATURATION = ui_mcm.get("saturation/FX_BLOWOUT_DAY_SATURATION")
-	FX_BLOWOUT_NIGHT_SATURATION = ui_mcm.get("saturation/FX_BLOWOUT_NIGHT_SATURATION")
-
-	FX_PSI_STORM_DAY_SATURATION = ui_mcm.get("saturation/FX_PSI_STORM_DAY_SATURATION")
-	FX_PSI_STORM_NIGHT_SATURATION = ui_mcm.get("saturation/FX_PSI_STORM_NIGHT_SATURATION")
-
-	UNDERGROUND_MAP_SATURATION = ui_mcm.get("saturation/UNDERGROUND_MAP_SATURATION")
 end
 
 -- in order for the saturation to be more consistent
@@ -145,6 +124,27 @@ function actor_on_update()
 		return
 	end
 
+	local weather_saturation = {
+		["[default]"] = W_CLEAR1_SATURATION,
+		w_clear1 = W_CLEAR1_SATURATION,
+		w_clear2 = W_CLEAR2_SATURATION,
+		w_partly1 = W_PARTLY1_SATURATION,
+		w_partly2 = W_PARTLY2_SATURATION,
+		w_foggy1 = W_FOGGY1_SATURATION,
+		w_foggy2 = W_FOGGY2_SATURATION,
+		w_cloudy1 = W_CLOUDY1_SATURATION,
+		w_cloudy2_dark = W_CLOUDY2_DARK_SATURATION,
+		w_rain1 = W_RAIN1_SATURATION,
+		w_rain2= W_RAIN2_SATURATION,
+		w_rain3= W_RAIN3_SATURATION,
+		w_storm1 = W_STORM1_SATURATION,
+		w_storm2 = W_STORM2_SATURATION,
+		fx_blowout_day = FX_BLOWOUT_DAY_SATURATION,
+		fx_blowout_night = FX_BLOWOUT_NIGHT_SATURATION,
+		fx_psi_storm_day = FX_PSI_STORM_DAY_SATURATION,
+		fx_psi_storm_night = FX_PSI_STORM_NIGHT_SATURATION,
+	}
+
 	local saturation = 1
 	local health = db.actor.health
 	local level_name = level.name()
@@ -152,7 +152,7 @@ function actor_on_update()
 
 	-- assign the corresponding saturation to the weather inside WEATHER[]
 	if WEATHER[current_weather] then
-		saturation = WEATHER_SATURATION[current_weather]
+		saturation = weather_saturation[current_weather]
 	end
 
 	-- assign saturation on underground levels

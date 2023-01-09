@@ -1,9 +1,6 @@
 local CreateTimeEvent = demonized_time_events.CreateTimeEvent
 local RemoveTimeEvent = demonized_time_events.RemoveTimeEvent
 
-local FIRST_LEVEL_WEATHER = ""
-local DEBUG_MODE
-
 function on_game_start()
 	RegisterScriptCallback("on_option_change", load_settings)
 	RegisterScriptCallback("actor_on_first_update", load_settings)
@@ -11,6 +8,9 @@ function on_game_start()
 	RegisterScriptCallback("actor_on_first_update", actor_on_first_update)
 	RegisterScriptCallback("actor_on_sleep", actor_on_sleep)
 end
+
+local FIRST_LEVEL_WEATHER = ""
+local DEBUG_MODE
 
 -- determine debug mode option
 function load_settings()
@@ -38,7 +38,7 @@ end
 
 -- main mcm function
 function on_mcm_load()
-	local current_weather = FIRST_LEVEL_WEATHER
+	local current_weather = FIRST_LEVEL_WEATHER or get_current_weather()
 	if is_blowout_psistorm_weather() then
 		current_weather = get_current_weather()
 	end
@@ -76,8 +76,8 @@ function on_mcm_load()
 				step = 0.01
 			},
 
-			-- partly weather
-			{id = "W_PARTY1_SATURATION",
+			-- partly clear weather
+			{id = "W_PARTLY1_SATURATION",
 				type = "track",
 				val = 2,
 				def = 1.5,
@@ -85,7 +85,7 @@ function on_mcm_load()
 				max = 2,
 				step = 0.01
 			},
-			{id = "W_PARTY2_SATURATION",
+			{id = "W_PARTLY2_SATURATION",
 				type = "track",
 				val = 2,
 				def = 1.3,
@@ -174,7 +174,7 @@ function on_mcm_load()
 				step = 0.01
 			},
 
-			-- psi storm weather
+			-- psi storm
 			{id = "FX_PSI_STORM_DAY_SATURATION",
 				type = "track",
 				val = 2,
