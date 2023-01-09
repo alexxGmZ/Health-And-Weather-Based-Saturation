@@ -38,7 +38,6 @@ end
 
 -- main mcm function
 function on_mcm_load()
-	local current_weather = FIRST_LEVEL_WEATHER or get_current_weather()
 	if is_blowout_psistorm_weather() then
 		current_weather = get_current_weather()
 	end
@@ -49,9 +48,13 @@ function on_mcm_load()
 		gr = {
 			{id = "title", type = "slide", link = "ui_options_slider_player", text = "ui_mcm_health_and_weather_title", size = {512, 50}, spacing = 20 },
 
-			{id = "current_weather",
+			{id = "visual_weather",
 				type = "desc",
-				text = "Current Weather: " .. current_weather
+				text = "Visual Weather: " .. FIRST_LEVEL_WEATHER
+			},
+			{id = "engine_weather",
+				type = "desc",
+				text = "Engine Weather: " .. get_current_weather()
 			},
 
 			{id = "HEALTH_BASED", type = "check", val = 1, def = true},
@@ -75,6 +78,7 @@ function on_mcm_load()
 				max = 2,
 				step = 0.01
 			},
+			{id = "divider", type = "line"},
 
 			-- partly clear weather
 			{id = "W_PARTLY1_SATURATION",
@@ -93,6 +97,7 @@ function on_mcm_load()
 				max = 2,
 				step = 0.01
 			},
+			{id = "divider", type = "line"},
 
 			-- foggy weather
 			{id = "W_FOGGY1_SATURATION",
@@ -111,6 +116,7 @@ function on_mcm_load()
 				max = 2,
 				step = 0.01
 			},
+			{id = "divider", type = "line"},
 
 			-- rainy weather
 			{id = "W_RAIN1_SATURATION",
@@ -137,6 +143,7 @@ function on_mcm_load()
 				max = 2,
 				step = 0.01
 			},
+			{id = "divider", type = "line"},
 
 			-- cloudy weather
 			{id = "W_CLOUDY1_SATURATION",
@@ -155,6 +162,7 @@ function on_mcm_load()
 				max = 2,
 				step = 0.01
 			},
+			{id = "divider", type = "line"},
 
 			-- stormy weather
 			{id = "W_STORM1_SATURATION",
@@ -173,6 +181,7 @@ function on_mcm_load()
 				max = 2,
 				step = 0.01
 			},
+			{id = "divider", type = "line"},
 
 			-- psi storm
 			{id = "FX_PSI_STORM_DAY_SATURATION",
@@ -191,6 +200,7 @@ function on_mcm_load()
 				max = 2,
 				step = 0.01
 			},
+			{id = "divider", type = "line"},
 
 			-- emission
 			{id = "FX_BLOWOUT_DAY_SATURATION",
@@ -211,6 +221,7 @@ function on_mcm_load()
 			},
 		}
 	}
+
 	return op
 end
 
