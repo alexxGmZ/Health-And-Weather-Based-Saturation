@@ -107,7 +107,7 @@ function load_settings()
 	end
 end
 
--- in order for the saturation to be more consistent
+-- in order for the saturation to be more consistent (no sudden change of saturation)
 local FIRST_LEVEL_WEATHER = nil
 function actor_on_first_update()
 	if is_blowout_psistorm_weather() or DEBUG_MODE then
@@ -171,10 +171,17 @@ end
 
 function is_blowout_psistorm_weather()
 	local weather = get_current_weather_file()
-	if weather == "fx_blowout_day" or weather == "fx_blowout_night" or
-		weather == "fx_psi_storm_day" or weather == "fx_psi_storm_night" then
+	local fx_weathers = {
+		fx_blowout_day = true,
+		fx_blowout_night = true,
+		fx_psi_storm_day = true,
+		fx_psi_storm_night = true,
+	}
+
+	if fx_weathers[weather] then
 		return true
 	end
+
 	return false
 end
 
@@ -196,9 +203,6 @@ function on_key_release(key)
 	utils_data.debug_write("----- health_and_weather_based_saturation.script debug section -----")
 	utils_data.debug_write("get_current_weather_file() " .. get_current_weather_file())
 	printf("FIRST_LEVEL_WEATHER %s", FIRST_LEVEL_WEATHER)
-
-	local inside = GetEvent("current_safe_cover") and true or false
-	printf("inside %s", inside)
 
 	if UNDERGROUND_MAPS[level.name()] then
 		utils_data.debug_write("UNDERGROUND_MAPS is TRUE")
