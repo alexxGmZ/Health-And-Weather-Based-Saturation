@@ -148,7 +148,11 @@ function actor_on_update()
 	local saturation = 1
 	local health = db.actor.health
 	local level_name = level.name()
-	local current_weather = FIRST_LEVEL_WEATHER or get_current_weather_file()
+	local current_weather = FIRST_LEVEL_WEATHER
+
+	if is_blowout_psistorm_weather() then
+		current_weather = get_current_weather_file()
+	end
 
 	-- assign the corresponding saturation to the weather inside WEATHER[]
 	if WEATHER[current_weather] then
