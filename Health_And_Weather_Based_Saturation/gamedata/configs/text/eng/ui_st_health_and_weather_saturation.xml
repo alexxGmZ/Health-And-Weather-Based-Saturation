@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+	<string id="ui_mcm_health_and_weather_title">
+		<text>Health and Weather Based Saturation</text>
+	</string>
+
+	<string id="ui_mcm_menu_saturation">
+		<text>Health and weather based Saturation</text>
+	</string>
+
+	<string id="ui_mcm_saturation_HEALTH_BASED">
+		<text>Health based Saturation</text>
+	</string>
+	<string id="ui_mcm_saturation_HEALTH_BASED_desc">
+		<text>Saturation is linked to actor health\n (Base Saturation * Actor Health = Overall Saturation)</text>
+	</string>
+
+	<string id="ui_mcm_saturation_BRIGHT_WEATHER_SATURATION">
+		<text>Bright weathers saturation</text>
+	</string>
+	<string id="ui_mcm_saturation_BRIGHT_WEATHER_SATURATION_desc">
+		<text>Affected weathers:\n
+		Clear 1\n
+		Clear 2\n
+		Partly cloudy 1\n
+		</text>
+	</string>
+
+	<string id="ui_mcm_saturation_SLIGHTLY_BRIGHT_WEATHER_SATURATION">
+		<text>Slightly bright weathers saturation</text>
+	</string>
+	<string id="ui_mcm_saturation_SLIGHTLY_BRIGHT_WEATHER_SATURATION_desc">
+		<text>Affected weathers:\n
+		Foggy 1\n
+		Foggy 2\n
+		Raining 1\n
+		Partly cloudy 2\n
+		</text>
+	</string>
+
+	<string id="ui_mcm_saturation_CLOUDY_WEATHER_SATURATION">
+		<text>Cloudy Weathers</text>
+	</string>
+	<string id="ui_mcm_saturation_CLOUDY_WEATHER_SATURATION_desc">
+		<text>Affected weathers:\n
+		Cloudy 1\n
+		Cloudy 2\n
+		</text>
+	</string>
+
+	<string id="ui_mcm_saturation_STORMY_RAINY_WEATHER_SATURATION">
+		<text>Stormy and rainy weathers saturation</text>
+	</string>
+	<string id="ui_mcm_saturation_STORMY_RAINY_WEATHER_SATURATION_desc">
+		<text>Affected weathers:\n
+		Stormy 1\n
+		Stormy 2\n
+		Raining 2\n
+		Raining 3\n
+		</text>
+	</string>
+
+	<string id="ui_mcm_saturation_BLOWOUT_PSISTORM_WEATHER_SATURATION">
+		<text>Blowout and Psistorm saturation</text>
+	</string>
+
+	<string id="ui_mcm_saturation_UNDERGROUND_MAP_SATURATION">
+		<text>Underground saturation</text>
+	</string>
+
+	<string id="ui_mcm_saturation_INDOOR_SATURATION">
+		<text>Indoor saturation</text>
+	</string>
+
+	<string id="ui_mcm_saturation_DEBUG_MODE">
+		<text>Debug mode</text>
+	</string>
+	<string id="ui_mcm_saturation_DEBUG_MODE_desc">
+		<text>Reload the game when toggling this option.</text>
+	</string>
+
+</string_table>
