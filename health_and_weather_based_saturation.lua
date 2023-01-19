@@ -148,7 +148,7 @@ function actor_on_update()
 	local saturation = 1
 	local health = db.actor.health
 	local level_name = level.name()
-	local current_weather = FIRST_LEVEL_WEATHER
+	local current_weather = FIRST_LEVEL_WEATHER or get_current_weather_file()
 
 	if is_blowout_psistorm_weather() then
 		current_weather = get_current_weather_file()
@@ -207,6 +207,7 @@ function on_key_release(key)
 	utils_data.debug_write("----- health_and_weather_based_saturation.script debug section -----")
 	utils_data.debug_write("get_current_weather_file() " .. get_current_weather_file())
 	printf("FIRST_LEVEL_WEATHER %s", FIRST_LEVEL_WEATHER)
+	printf("DEBUG_MODE %s", DEBUG_MODE)
 
 	if UNDERGROUND_MAPS[level.name()] then
 		utils_data.debug_write("UNDERGROUND_MAPS is TRUE")
