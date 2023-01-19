@@ -1,5 +1,4 @@
 <h1 align="center">Health and Weather Based Saturation</h1>
-<h3 align="center">(Individual Weather Control Version)</h3>
 
 <p align="center">
     <a href="https://www.moddb.com/mods/stalker-anomaly/addons/health-and-weather-based-saturation" title="Download Health and Weather Based Saturation (UPDATE 2) - Mod DB" target="_blank">
@@ -9,12 +8,14 @@
 
 <br>
 
-This version of the addon aims to give more control to each weather saturation through MCM.
-Unlike the other one version where the weathers are group into six sets, this version is not.
+### This Addon has two release folders:
+* **Health_And_Weather_Based_Saturation**
+   + Designed for [Michikos Weather Revamp Revised](https://www.moddb.com/mods/stalker-anomaly/addons/michikos-weather-revamp-revised)
+* **Health_And_Weather_Based_Saturation(individual weather control)**
+   + Designed for non Michikos Weather Revamp Revised players
+   + Has more control on saturation for each weather
 
-This addon dynamically readjust the game saturation(```r__saturation```) in the settings
-depending on the weather and character health. The Saturation setting will be locked
-while this mod is installed.
+<br>
 
 **MCM is supported**
 
@@ -26,8 +27,7 @@ I strongly recommend to use alongside with (budget graphical improvements):
 * [Michikos Weather Revamp Revised](https://www.moddb.com/mods/stalker-anomaly/addons/michikos-weather-revamp-revised)
 * [Dynamic Time-based Tonemap Extended](https://www.moddb.com/mods/stalker-anomaly/addons/dynamic-time-based-tonemap-extended)
 
-<br>
+Tip:
+   * By pressing "9" (not the numpad) you can view some logs in the console panel by
+     pressing "`". Maybe it can help on debugging or reporting some bugs in the Moddb site.
 
-Not currently compatible with:
-
-* [Ayykyu's Screen Effects Modified by Handsome_ooyeah](https://www.moddb.com/mods/stalker-anomaly/addons/ayykyus-screen-effects-modified-by-handsome-ooyeah2)
