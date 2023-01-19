@@ -1,49 +1,33 @@
--- Change the value to "false" if you don't want the health based aspect
-local HEALTH_BASED = true
+local CreateTimeEvent = demonized_time_events.CreateTimeEvent
+local RemoveTimeEvent = demonized_time_events.RemoveTimeEvent
 
--- Change the value to "true" if you are planning to play around the debug mode
--- especially the weather editor
-local DEBUG_MODE = false
+-- change the default value in "health_and_weather_based_saturation_mcm.script"
+local HEALTH_BASED
+local DEBUG_MODE
 
--- r__saturation values should be within [0 - 2]
-local BRIGHT_WEATHER_SATURATION = 1.5
-local BRIGHT_WEATHERS = {
-	w_clear1 = true,
-	w_clear2 = true,
-	w_partly1 = true
-}
+local W_CLEAR1_SATURATION
+local W_CLEAR2_SATURATION
+local W_PARTLY1_SATURATION
 
-local SLIGHTLY_BRIGHT_WEATHER_SATURATION = 1.3
-local SLIGHTLY_BRIGHT_WEATHER = {
-	w_foggy1 = true,
-	w_foggy2 = true,
-	w_rain1 = true,
-	w_partly2 = true
-}
+local W_FOGGY1_SATURATION
+local W_FOGGY2_SATURATION
+local W_RAIN1_SATURATION
+local W_PARTLY2_SATURATION
 
-local CLOUDY_WEATHER_SATURATION = 1
-local CLOUDY_WEATHER = {
-	w_cloudy1 = true,
-	w_cloudy2_dark = true
-}
+local W_CLOUDY1_SATURATION
+local W_CLOUDY2_DARK_SATURATION
 
-local STORMY_RAINY_WEATHER_SATURATION = 0.8
-local STORMY_RAINY_WEATHER = {
-	w_storm1 = true,
-	w_storm2 = true,
-	w_rain2 = true,
-	w_rain3 = true
-}
+local W_STORM1_SATURATION
+local W_STORM2_SATURATION
+local W_RAIN2_SATURATION
+local W_RAIN3_SATURATION
 
-local BLOWOUT_PSISTORM_WEATHER_SATURATION = 1
-local BLOWOUT_PSISTORM_WEATHER = {
-	fx_blowout_day = true,
-	fx_blowout_night = true,
-	fx_psi_storm_day = true,
-	fx_psi_storm_night = true
-}
+local FX_BLOWOUT_DAY_SATURATION
+local FX_BLOWOUT_NIGHT_SATURATION
+local FX_PSI_STORM_DAY_SATURATION
+local FX_PSI_STORM_NIGHT_SATURATION
 
-local UNDERGROUND_MAP_SATURATION = 1.5
+local UNDERGROUND_MAP_SATURATION = 1
 local UNDERGROUND_MAPS = {
 	l03u_agr_underground = true,
 	l08u_brainlab = true,
@@ -56,7 +40,26 @@ local UNDERGROUND_MAPS = {
 	l13u_warlab = true
 }
 
-local INDOOR_SATURATION = 1.5
+local WEATHER = {
+	["[default]"] = true,
+	w_clear1 = true,
+	w_clear2 = true,
+	w_partly1 = true,
+	w_partly2 = true,
+	w_foggy1 = true,
+	w_foggy2 = true,
+	w_cloudy1 = true,
+	w_cloudy2_dark = true,
+	w_rain1 = true,
+	w_rain2 = true,
+	w_rain3 = true,
+	w_storm1 = true,
+	w_storm2 = true,
+	fx_blowout_day = true,
+	fx_blowout_night = true,
+	fx_psi_storm_day = true,
+	fx_psi_storm_night = true,
+}
 
 function on_game_start()
 	-- MCM stuff
@@ -73,24 +76,47 @@ end
 function load_settings()
 	if ui_mcm then
 		HEALTH_BASED = ui_mcm.get("saturation/HEALTH_BASED")
-		BRIGHT_WEATHER_SATURATION = ui_mcm.get("saturation/BRIGHT_WEATHER_SATURATION")
-		SLIGHTLY_BRIGHT_WEATHER_SATURATION = ui_mcm.get("saturation/SLIGHTLY_BRIGHT_WEATHER_SATURATION")
-		CLOUDY_WEATHER_SATURATION = ui_mcm.get("saturation/CLOUDY_WEATHER_SATURATION")
-		STORMY_RAINY_WEATHER_SATURATION = ui_mcm.get("saturation/STORMY_RAINY_WEATHER_SATURATION")
-		BLOWOUT_PSISTORM_WEATHER_SATURATION = ui_mcm.get("saturation/BLOWOUT_PSISTORM_WEATHER_SATURATION")
-		UNDERGROUND_MAP_SATURATION = ui_mcm.get("saturation/UNDERGROUND_MAP_SATURATION")
 		DEBUG_MODE = ui_mcm.get("saturation/DEBUG_MODE")
+
+		W_CLEAR1_SATURATION = ui_mcm.get("saturation/W_CLEAR1_SATURATION")
+		W_CLEAR2_SATURATION = ui_mcm.get("saturation/W_CLEAR2_SATURATION")
+
+		W_PARTLY1_SATURATION = ui_mcm.get("saturation/W_PARTLY1_SATURATION")
+		W_PARTLY2_SATURATION = ui_mcm.get("saturation/W_PARTLY2_SATURATION")
+
+		W_FOGGY1_SATURATION = ui_mcm.get("saturation/W_FOGGY1_SATURATION")
+		W_FOGGY2_SATURATION = ui_mcm.get("saturation/W_FOGGY2_SATURATION")
+
+		W_RAIN1_SATURATION = ui_mcm.get("saturation/W_RAIN1_SATURATION")
+		W_RAIN2_SATURATION = ui_mcm.get("saturation/W_RAIN2_SATURATION")
+		W_RAIN3_SATURATION = ui_mcm.get("saturation/W_RAIN3_SATURATION")
+
+		W_CLOUDY1_SATURATION = ui_mcm.get("saturation/W_CLOUDY1_SATURATION")
+		W_CLOUDY2_DARK_SATURATION = ui_mcm.get("saturation/W_CLOUDY2_DARK_SATURATION")
+
+		W_STORM1_SATURATION = ui_mcm.get("saturation/W_STORM1_SATURATION")
+		W_STORM2_SATURATION = ui_mcm.get("saturation/W_STORM2_SATURATION")
+
+		FX_BLOWOUT_DAY_SATURATION = ui_mcm.get("saturation/FX_BLOWOUT_DAY_SATURATION")
+		FX_BLOWOUT_NIGHT_SATURATION = ui_mcm.get("saturation/FX_BLOWOUT_NIGHT_SATURATION")
+
+		FX_PSI_STORM_DAY_SATURATION = ui_mcm.get("saturation/FX_PSI_STORM_DAY_SATURATION")
+		FX_PSI_STORM_NIGHT_SATURATION = ui_mcm.get("saturation/FX_PSI_STORM_NIGHT_SATURATION")
+
+		UNDERGROUND_MAP_SATURATION = ui_mcm.get("saturation/UNDERGROUND_MAP_SATURATION")
 	end
 end
 
--- in order for the saturation to be more consistent
+-- in order for the saturation to be more consistent (no sudden change of saturation)
 local FIRST_LEVEL_WEATHER = nil
 function actor_on_first_update()
-	if is_blowout_psistorm_weather() or DEBUG_MODE == true then
+	if is_blowout_psistorm_weather() or DEBUG_MODE then
 		FIRST_LEVEL_WEATHER = nil
 	else
 		FIRST_LEVEL_WEATHER = get_current_weather_file()
 	end
+
+	RemoveTimeEvent("reset_first_weather", "reset_first_weather")
 end
 
 function actor_on_update()
@@ -98,25 +124,42 @@ function actor_on_update()
 		return
 	end
 
+	local weather_saturation = {
+		["[default]"] = W_CLEAR1_SATURATION,
+		w_clear1 = W_CLEAR1_SATURATION,
+		w_clear2 = W_CLEAR2_SATURATION,
+		w_partly1 = W_PARTLY1_SATURATION,
+		w_partly2 = W_PARTLY2_SATURATION,
+		w_foggy1 = W_FOGGY1_SATURATION,
+		w_foggy2 = W_FOGGY2_SATURATION,
+		w_cloudy1 = W_CLOUDY1_SATURATION,
+		w_cloudy2_dark = W_CLOUDY2_DARK_SATURATION,
+		w_rain1 = W_RAIN1_SATURATION,
+		w_rain2= W_RAIN2_SATURATION,
+		w_rain3= W_RAIN3_SATURATION,
+		w_storm1 = W_STORM1_SATURATION,
+		w_storm2 = W_STORM2_SATURATION,
+		fx_blowout_day = FX_BLOWOUT_DAY_SATURATION,
+		fx_blowout_night = FX_BLOWOUT_NIGHT_SATURATION,
+		fx_psi_storm_day = FX_PSI_STORM_DAY_SATURATION,
+		fx_psi_storm_night = FX_PSI_STORM_NIGHT_SATURATION,
+	}
+
 	local saturation = 1
 	local health = db.actor.health
 	local level_name = level.name()
+	local current_weather = FIRST_LEVEL_WEATHER
 
-	if is_bright_weather() then
-		saturation = BRIGHT_WEATHER_SATURATION
-	end
-	if is_slightly_bright_weather() then
-		saturation = SLIGHTLY_BRIGHT_WEATHER_SATURATION
-	end
-	if is_cloudy_weather() then
-		saturation = CLOUDY_WEATHER_SATURATION
-	end
-	if is_stormy_rainy_weather() then
-		saturation = STORMY_RAINY_WEATHER_SATURATION
-	end
 	if is_blowout_psistorm_weather() then
-		saturation = BLOWOUT_PSISTORM_WEATHER_SATURATION
+		current_weather = get_current_weather_file()
 	end
+
+	-- assign the corresponding saturation to the weather inside WEATHER[]
+	if WEATHER[current_weather] then
+		saturation = weather_saturation[current_weather]
+	end
+
+	-- assign saturation on underground levels
 	if UNDERGROUND_MAPS[level_name] then
 		saturation = UNDERGROUND_MAP_SATURATION
 	end
@@ -130,64 +173,25 @@ function actor_on_update()
 	end
 end
 
-function actor_on_sleep()
-	actor_on_first_update()
-end
-
-function is_bright_weather()
-	local weather = get_current_weather_file()
-	if FIRST_LEVEL_WEATHER ~= nil then
-		weather = FIRST_LEVEL_WEATHER
-	end
-
-	if BRIGHT_WEATHERS[weather] or weather == "[default]" then
-		return true
-	end
-	return false
-end
-
-function is_slightly_bright_weather()
-	local weather = get_current_weather_file()
-	if FIRST_LEVEL_WEATHER ~= nil then
-		weather = FIRST_LEVEL_WEATHER
-	end
-
-	if SLIGHTLY_BRIGHT_WEATHER[weather] then
-		return true
-	end
-	return false
-end
-
-function is_cloudy_weather()
-	local weather = get_current_weather_file()
-	if FIRST_LEVEL_WEATHER ~= nil then
-		weather = FIRST_LEVEL_WEATHER
-	end
-
-	if CLOUDY_WEATHER[weather] then
-		return true
-	end
-	return false
-end
-
-function is_stormy_rainy_weather()
-	local weather = get_current_weather_file()
-	if FIRST_LEVEL_WEATHER ~= nil then
-		weather = FIRST_LEVEL_WEATHER
-	end
-
-	if STORMY_RAINY_WEATHER[weather] then
-		return true
-	end
-	return false
-end
-
 function is_blowout_psistorm_weather()
 	local weather = get_current_weather_file()
-	if BLOWOUT_PSISTORM_WEATHER[weather] then
+	local fx_weathers = {
+		fx_blowout_day = true,
+		fx_blowout_night = true,
+		fx_psi_storm_day = true,
+		fx_psi_storm_night = true,
+	}
+
+	if fx_weathers[weather] then
 		return true
 	end
+
 	return false
+end
+
+function actor_on_sleep()
+	-- actor_on_first_update()
+	CreateTimeEvent("reset_first_weather", "reset_first_weather", 3, actor_on_first_update)
 end
 
 function get_current_weather_file()
@@ -195,44 +199,18 @@ function get_current_weather_file()
 end
 
 -- for debugging purposes
-function on_key_release(key, stalker)
-	if key == DIK_keys["DIK_9"] then
-		utils_data.debug_write("----- health_and_weather_based_saturation.script debug section -----")
-		utils_data.debug_write("get_current_weather_file() " .. get_current_weather_file())
-		printf("FIRST_LEVEL_WEATHER %s", FIRST_LEVEL_WEATHER)
+function on_key_release(key)
+	if key ~= DIK_keys["DIK_9"] then
+		return
+	end
 
-		local inside = GetEvent("current_safe_cover") and true or false
-		printf("inside %s", inside)
+	utils_data.debug_write("----- health_and_weather_based_saturation.script debug section -----")
+	utils_data.debug_write("get_current_weather_file() " .. get_current_weather_file())
+	printf("FIRST_LEVEL_WEATHER %s", FIRST_LEVEL_WEATHER)
 
-		if is_bright_weather() then
-			utils_data.debug_write("is_bright_weather() is TRUE")
-			printf("Saturation %s", BRIGHT_WEATHER_SATURATION * db.actor.health)
-		end
-
-		if is_slightly_bright_weather() then
-			utils_data.debug_write("is_slightly_bright_weather() is TRUE")
-			printf("Saturation %s", SLIGHTLY_BRIGHT_WEATHER_SATURATION * db.actor.health)
-		end
-
-		if is_cloudy_weather() then
-			utils_data.debug_write("is_cloudy_weather() is TRUE")
-			printf("Saturation %s", CLOUDY_WEATHER_SATURATION * db.actor.health)
-		end
-
-		if is_stormy_rainy_weather() then
-			utils_data.debug_write("is_stormy_rainy_weather() is TRUE")
-			printf("Saturation %s", STORMY_RAINY_WEATHER_SATURATION * db.actor.health)
-		end
-
-		if is_blowout_psistorm_weather() then
-			utils_data.debug_write("is_blowout_psistorm_weather() is TRUE")
-			printf("Saturation %s", BLOWOUT_PSISTORM_WEATHER_SATURATION * db.actor.health)
-		end
-
-		if UNDERGROUND_MAPS[level.name()] then
-			utils_data.debug_write("UNDERGROUND_MAPS is TRUE")
-			printf("Saturation %s", UNDERGROUND_MAP_SATURATION * db.actor.health)
-		end
+	if UNDERGROUND_MAPS[level.name()] then
+		utils_data.debug_write("UNDERGROUND_MAPS is TRUE")
+		printf("Saturation %s", UNDERGROUND_MAP_SATURATION * db.actor.health)
 	end
 end
 

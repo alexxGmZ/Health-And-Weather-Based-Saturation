@@ -38,6 +38,7 @@ end
 
 -- main mcm function
 function on_mcm_load()
+	local current_weather = FIRST_LEVEL_WEATHER
 	if is_blowout_psistorm_weather() then
 		current_weather = get_current_weather()
 	end
@@ -50,7 +51,7 @@ function on_mcm_load()
 
 			{id = "visual_weather",
 				type = "desc",
-				text = "Visual Weather: " .. FIRST_LEVEL_WEATHER
+				text = "Visual Weather: " .. current_weather
 			},
 			{id = "engine_weather",
 				type = "desc",

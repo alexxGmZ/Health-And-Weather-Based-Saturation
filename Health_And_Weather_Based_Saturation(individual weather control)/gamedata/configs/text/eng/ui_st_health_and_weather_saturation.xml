@@ -26,7 +26,7 @@
 
 	<!-- W_CLEAR1_SATURATION -->
 	<string id="ui_mcm_saturation_W_CLEAR1_SATURATION">
-		<text>w_clear1 Saturation</text>
+		<text>w_clear1 or [default] Saturation</text>
 	</string>
 
 	<!-- W_CLEAR2_SATURATION -->
