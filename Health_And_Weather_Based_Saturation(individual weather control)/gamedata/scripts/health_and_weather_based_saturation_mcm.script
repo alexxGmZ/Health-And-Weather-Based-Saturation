@@ -220,6 +220,16 @@ function on_mcm_load()
 				max = 2,
 				step = 0.01
 			},
+
+			-- underground maps
+			{id = "UNDERGROUND_MAP_SATURATION",
+				type = "track",
+				val = 2,
+				def = 1.5,
+				min = 0.02,
+				max = 2,
+				step = 0.01
+			},
 		}
 	}
 
