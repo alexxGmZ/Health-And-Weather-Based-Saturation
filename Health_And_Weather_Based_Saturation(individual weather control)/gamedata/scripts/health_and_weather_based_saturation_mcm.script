@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global, lowercase-global
 local CreateTimeEvent = demonized_time_events.CreateTimeEvent
 local RemoveTimeEvent = demonized_time_events.RemoveTimeEvent
 
