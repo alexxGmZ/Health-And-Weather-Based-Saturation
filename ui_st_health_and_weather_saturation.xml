@@ -35,12 +35,12 @@
 	</string>
 
 	<!-- W_PARTL1_SATURATION -->
-	<string id="ui_mcm_saturation_W_PARTYL1_SATURATION">
+	<string id="ui_mcm_saturation_W_PARTLY1_SATURATION">
 		<text>w_partyl1 Saturation</text>
 	</string>
 
 	<!-- W_PARTL2_SATURATION -->
-	<string id="ui_mcm_saturation_W_PARTYL2_SATURATION">
+	<string id="ui_mcm_saturation_W_PARTLY2_SATURATION">
 		<text>w_partyl2 Saturation</text>
 	</string>
 
@@ -107,5 +107,10 @@
 	<!-- FX_BLOWOUT_NIGHT_SATURATION -->
 	<string id="ui_mcm_saturation_FX_BLOWOUT_NIGHT_SATURATION">
 		<text>fx_blowout_night Saturation</text>
+	</string>
+
+	<!-- UNDERGROUND_MAP_SATURATION -->
+	<string id="ui_mcm_saturation_UNDERGROUND_MAP_SATURATION">
+		<text>Underground Maps Saturation</text>
 	</string>
 </string_table>
